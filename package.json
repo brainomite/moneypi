@@ -1,0 +1,24 @@
+{
+  "name": "moneypi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm i --prefix ./frontend && npm i --prefix ./backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brainomite/moneypi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brainomite/moneypi/issues"
+  },
+  "homepage": "https://github.com/brainomite/moneypi#readme",
+  "devDependencies": {
+    "concurrently": "^6.0.1"
+  }
+}
