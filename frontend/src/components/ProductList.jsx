@@ -5,6 +5,9 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Drawer from "@material-ui/core/Drawer";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import coinbaseProductsPropType from "../propTypeValidations/coinbaseProductsPropType";
+
 const useStyles = makeStyles({
   list: {
     width: 250,
@@ -13,12 +16,7 @@ const useStyles = makeStyles({
     width: "auto",
   },
 });
-export default function ProductList({
-  coinbaseProducts,
-  opened,
-  setOpened,
-  addTicker,
-}) {
+function ProductList({ coinbaseProducts, opened, setOpened, addTicker }) {
   const classes = useStyles();
   const products = coinbaseProducts.map((product) => {
     const addIt = () => addTicker(product.id);
@@ -33,8 +31,17 @@ export default function ProductList({
     );
   });
   return (
-    <Drawer anchor={"left"} open={opened} onClose={() => setOpened(false)}>
+    <Drawer anchor="left" open={opened} onClose={() => setOpened(false)}>
       <List className={classes.list}>{products}</List>
     </Drawer>
   );
 }
+
+ProductList.propTypes = {
+  coinbaseProducts: coinbaseProductsPropType.isRequired,
+  opened: PropTypes.bool.isRequired,
+  setOpened: PropTypes.func.isRequired,
+  addTicker: PropTypes.func.isRequired,
+};
+
+export default ProductList;

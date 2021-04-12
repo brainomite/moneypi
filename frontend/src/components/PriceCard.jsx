@@ -1,12 +1,15 @@
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
+import PropTypes from "prop-types";
 import CryptoAvatar from "./CryptoAvatar";
-export default function PriceCard({
+import coinbaseTickerDataPropType from "../propTypeValidations/coinbaseTickerDataPropType";
+
+function PriceCard({
   socketConnected,
   socket,
   currency,
@@ -17,24 +20,19 @@ export default function PriceCard({
   if (connected !== socketConnected) setConnected(socketConnected);
   const io = useRef(socket);
   useEffect(() => {
-    if (!connected) return;
-    let msg = {
-      type: "subscribe",
-      product_ids: [currency],
-      channels: ["ticker"],
-    };
-    let jsonMsg = JSON.stringify(msg);
-    io.current.send(jsonMsg);
     const socketIo = io.current;
-    return () => {
-      let msg = {
-        type: "unsubscribe",
+    const sendType = (type) => {
+      if (!connected) return;
+      const msg = {
+        type,
         product_ids: [currency],
         channels: ["ticker"],
       };
-      let jsonMsg = JSON.stringify(msg);
+      const jsonMsg = JSON.stringify(msg);
       socketIo.send(jsonMsg);
     };
+    sendType("subscribe");
+    return () => sendType("unsubscribe");
   }, [connected, currency]);
 
   const [price, setPrice] = useState(null);
@@ -65,3 +63,13 @@ export default function PriceCard({
     </Card>
   );
 }
+
+PriceCard.propTypes = {
+  socketConnected: PropTypes.bool.isRequired,
+  socket: PropTypes.instanceOf(WebSocket).isRequired,
+  currency: PropTypes.string.isRequired,
+  tickerData: coinbaseTickerDataPropType.isRequired,
+  removeTicker: PropTypes.func.isRequired,
+};
+
+export default PriceCard;

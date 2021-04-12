@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./App.css";
-import Main from "./components/Main";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { unstable_createMuiStrictModeTheme as createMuiTheme } from "@material-ui/core";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
+import Main from "./components/Main";
 
 // const ENDPOINT = "http://moneypi:8080/";
 const url = "wss://ws-feed.pro.coinbase.com";
@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     axios.get("https://api.pro.coinbase.com/products/").then(({ data }) => {
       const filtered = data.filter(
-        (products) => products.quote_currency === "USD"
+        (product) => product.quote_currency === "USD"
       );
       setProducts(filtered);
     });
@@ -42,6 +42,7 @@ function App() {
 
   useEffect(() => {
     const { current: socket } = socketRef;
+    // eslint-disable-next-line no-console
     socket.onerror = (error) => console.log("error:", error);
     socket.onopen = () => {
       setConnected(true);
@@ -49,7 +50,7 @@ function App() {
   }, [socketRef]);
 
   socketRef.current.onmessage = (e) => {
-    let data = JSON.parse(e.data);
+    const data = JSON.parse(e.data);
     if (data.type !== "ticker") {
       return;
     }
@@ -92,7 +93,8 @@ function App() {
     .sort(({ id: tickerA }, { id: tickerB }) => {
       if (tickerA > tickerB) {
         return 1;
-      } else if (tickerA < tickerB) {
+      }
+      if (tickerA < tickerB) {
         return -1;
       }
       return 0;
@@ -100,7 +102,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth={"lg"} className="App">
+      <Container maxWidth="lg" className="App">
         <CssBaseline />
         <Main
           tickerData={tickerData}
