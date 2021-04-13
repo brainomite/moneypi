@@ -29,12 +29,6 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <GithubCorner
-        href="https://github.com/brainomite/moneypi"
-        bannerColor="#FD6C6C"
-        octoColor="#fff"
-        size={64}
-      />
       <AppBar position="static" color="transparent">
         <Toolbar>
           <IconButton

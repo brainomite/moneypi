@@ -6,8 +6,8 @@ import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
 import PropTypes from "prop-types";
-import CryptoAvatar from "./CryptoAvatar";
-import coinbaseTickerDataPropType from "../propTypeValidations/coinbaseTickerDataPropType";
+import CryptoAvatar from "../CryptoAvatar";
+import coinbaseTickerDataPropType from "../../propTypeValidations/coinbaseTickerDataPropType";
 
 function PriceCard({
   socketConnected,
