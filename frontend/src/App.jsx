@@ -6,6 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import Main from "./components/Main";
+import AppBar from "./components/AppBar";
 
 // const ENDPOINT = "http://moneypi:8080/";
 const url = "wss://ws-feed.pro.coinbase.com";
@@ -102,6 +103,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      <AppBar />
       <Container maxWidth="lg" className="App">
         <CssBaseline />
         <Main
